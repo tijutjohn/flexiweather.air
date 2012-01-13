@@ -3,7 +3,6 @@ package com.iblsoft.flexiweather.air.loading
 	import com.iblsoft.flexiweather.net.data.UniURLLoaderData;
 	import com.iblsoft.flexiweather.net.interfaces.IURLLoaderBasicAuth;
 	import com.iblsoft.flexiweather.net.interfaces.IURLLoaderBasicAuthListener;
-	import com.iblsoft.flexiweather.utils.UniURLLoader;
 	
 	import flash.events.HTTPStatusEvent;
 	import flash.net.URLLoader;

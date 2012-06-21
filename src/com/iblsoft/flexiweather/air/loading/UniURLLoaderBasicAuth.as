@@ -19,6 +19,14 @@ package com.iblsoft.flexiweather.air.loading
 		{
 		}
 		
+		public function destroy(): void
+		{
+			removeBasicAuthListeners();
+			_loader = null;
+			_data.destroy();
+			_data = null;
+			_basicAuthLoader = null;
+		}
 		public function addBasicAuthListeners(basicAuthLoader: IURLLoaderBasicAuth, urlLoader: URLLoader, data: UniURLLoaderData):void
 		{
 			_basicAuthLoader = basicAuthLoader;
@@ -30,7 +38,8 @@ package com.iblsoft.flexiweather.air.loading
 		
 		public function removeBasicAuthListeners():void
 		{
-			_loader.removeEventListener(HTTPStatusEvent.HTTP_RESPONSE_STATUS, onHttpResponseStatus);
+			if (_loader)
+				_loader.removeEventListener(HTTPStatusEvent.HTTP_RESPONSE_STATUS, onHttpResponseStatus);
 			
 		}
 		

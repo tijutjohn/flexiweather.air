@@ -8,7 +8,7 @@ package com.iblsoft.flexiweather.air.loading
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
 	import flash.net.URLRequestHeader;
-
+	
 	public class UniURLLoaderBasicAuth implements IURLLoaderBasicAuthListener
 	{
 		private var _basicAuthLoader: IURLLoaderBasicAuth;
@@ -19,6 +19,14 @@ package com.iblsoft.flexiweather.air.loading
 		{
 		}
 		
+		public function destroy(): void
+		{
+			removeBasicAuthListeners();
+			_loader = null;
+			_data.destroy();
+			_data = null;
+			_basicAuthLoader = null;
+		}
 		public function addBasicAuthListeners(basicAuthLoader: IURLLoaderBasicAuth, urlLoader: URLLoader, data: UniURLLoaderData):void
 		{
 			_basicAuthLoader = basicAuthLoader;
@@ -30,7 +38,8 @@ package com.iblsoft.flexiweather.air.loading
 		
 		public function removeBasicAuthListeners():void
 		{
-			_loader.removeEventListener(HTTPStatusEvent.HTTP_RESPONSE_STATUS, onHttpResponseStatus);
+			if (_loader)
+				_loader.removeEventListener(HTTPStatusEvent.HTTP_RESPONSE_STATUS, onHttpResponseStatus);
 			
 		}
 		
@@ -44,7 +53,7 @@ package com.iblsoft.flexiweather.air.loading
 			/*
 			trace("onHttpResponseStatus: " + event.responseURL);
 			for each( var header: URLRequestHeader in event.responseHeaders )  {
-				trace( "name: " + header.name + "\nvalue: " + header.value + "\n" ); 
+			trace( "name: " + header.name + "\nvalue: " + header.value + "\n" ); 
 			}
 			*/
 			_basicAuthLoader.setResponseHeaders(event.responseHeaders, event.responseURL, event.status, event.currentTarget);
